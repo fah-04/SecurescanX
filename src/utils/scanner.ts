@@ -104,6 +104,56 @@ const vulnerabilityPatterns: VulnerabilityPattern[] = [
     remediation: 'Avoid using unsafe-inline and unsafe-eval in your CSP. Use nonces or hashes for inline scripts if they are necessary. Implement a strict CSP that specifies trusted sources for all content types.',
     learnMoreUrl: 'https://owasp.org/Top10/A05_2021-Security_Misconfiguration/'
   }
+  {
+  id: 'insecure-design',
+  pattern: /(TODO|FIXME).*security|\/\*\s*no\s*security\s*checks\s*\*\//i,
+  title: 'Potential Insecure Design',
+  description: 'Code contains comments indicating missing or incomplete security checks, which may be a sign of insecure design.',
+  category: 'A04:2021-Insecure Design',
+  severity: 'medium',
+  remediation: 'Review the code for missing security controls and implement proper security checks as required by secure design guidelines.',
+  learnMoreUrl: 'https://owasp.org/Top10/A04_2021-Insecure_Design/'
+},
+{
+  id: 'vulnerable-components',
+  pattern: /(require|from)\s+['"](.*jquery.*1\.[0-9]+|.*lodash.*3\.[0-9]+|.*moment.*2\.[0-9]+)/i,
+  title: 'Vulnerable or Outdated Components',
+  description: 'Imports or requires known vulnerable or outdated libraries (e.g., old versions of jquery, lodash, moment).',
+  category: 'A06:2021-Vulnerable and Outdated Components',
+  severity: 'high',
+  remediation: 'Update third-party libraries to the latest secure versions. Regularly audit dependencies for known vulnerabilities.',
+  learnMoreUrl: 'https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/'
+},
+{
+  id: 'integrity-failures',
+  pattern: /(npm\s+install\s+.*--unsafe-perm)|(child_process\.exec\s*\(\s*['"].*curl.*\|.*sh['"])/i,
+  title: 'Software and Data Integrity Failure',
+  description: 'Detects code executing direct downloads and shell scripts, or installing npm packages with unsafe permissions.',
+  category: 'A08:2021-Software and Data Integrity Failures',
+  severity: 'critical',
+  remediation: 'Avoid using unsafe install flags and never execute downloaded code directly. Always verify the integrity and authenticity of code and dependencies.',
+  learnMoreUrl: 'https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/'
+},
+{
+  id: 'logging-monitoring-failures',
+  pattern: /(catch\s*\(.*\)\s*\{\s*\})|console\.log\s*\(\s*['"]error['"]/i,
+  title: 'Security Logging and Monitoring Failure',
+  description: 'Code catches exceptions without logging or logs errors to the console instead of a secure log facility.',
+  category: 'A09:2021-Security Logging and Monitoring Failures',
+  severity: 'medium',
+  remediation: 'Ensure all exceptions and security-relevant events are properly logged to a secure, centralized logging system, not just the console.',
+  learnMoreUrl: 'https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/'
+},
+{
+  id: 'ssrf',
+  pattern: /(fetch|axios|get|post|request)\s*\(\s*userInput/i,
+  title: 'Server-Side Request Forgery (SSRF)',
+  description: 'Server-side HTTP requests use user-supplied input as the URL target, which may allow SSRF attacks.',
+  category: 'A10:2021-Server-Side Request Forgery (SSRF)',
+  severity: 'critical',
+  remediation: 'Never use user input directly in server-side requests. Validate and sanitize URLs, and restrict outbound connections to trusted domains.',
+  learnMoreUrl: 'https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_(SSRF)/'
+} 
 ];
 
 // Enhanced scanning function with AI-powered analysis
